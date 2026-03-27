@@ -1,24 +1,53 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import "./publicPages.css";
 
+import { loginUser } from "../../services/authService";
+
 const LoginPage = () => {
+  const navigate = useNavigate();
+  const [form, setForm] = useState({ email: "", password: "" });
+
+  const handleChange = (field) => (e) => {
+    setForm((prev) => ({ ...prev, [field]: e.target.value }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    await loginUser(form);
+    navigate("/dashboard");
+  };
+
   return (
     <main className="public-page auth-page">
       <section className="auth-card">
         <h1>Welcome back</h1>
         <p>Login to continue to your Titan Trades dashboard.</p>
 
-        <form className="auth-form">
+        <form className="auth-form" onSubmit={handleSubmit}>
           <label htmlFor="email">Email</label>
-          <input id="email" type="email" placeholder="you@example.com" />
+          <input
+            id="email"
+            type="email"
+            placeholder="you@example.com"
+            value={form.email}
+            onChange={handleChange("email")}
+            required
+          />
 
           <label htmlFor="password">Password</label>
-          <input id="password" type="password" placeholder="••••••••" />
+          <input
+            id="password"
+            type="password"
+            placeholder="••••••••"
+            value={form.password}
+            onChange={handleChange("password")}
+            required
+          />
 
-          <Link to="/dashboard" className="primary-btn auth-submit">
+          <button type="submit" className="primary-btn auth-submit">
             Sign In
-          </Link>
+          </button>
         </form>
 
         <p className="auth-footer">

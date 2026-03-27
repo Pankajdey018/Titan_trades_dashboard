@@ -1,14 +1,29 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./WatchList.css";
 
 import { watchlist as initialData } from "../../../data/data";
 import WatchListItem from "./WatchListItem";
 import { DoughnutChart } from "../../charts/DoughnoutChart";
+import { fetchWatchlist } from "../../../services/watchlistService";
 
 const WatchList = () => {
   const [search, setSearch] = useState("");
+  const [watchlist, setWatchlist] = useState(initialData);
 
-  const filteredData = initialData.filter((stock) =>
+  useEffect(() => {
+    const loadWatchlist = async () => {
+      try {
+        const data = await fetchWatchlist();
+        if (data.length > 0) setWatchlist(data);
+      } catch {
+        // keep local fallback data
+      }
+    };
+
+    loadWatchlist();
+  }, []);
+
+  const filteredData = watchlist.filter((stock) =>
     stock.name.toLowerCase().includes(search.toLowerCase())
   );
 
@@ -26,7 +41,6 @@ const WatchList = () => {
 
   return (
     <div className="watchlist">
-      {/* Search */}
       <div className="watchlist-header">
         <input
           type="text"
@@ -37,14 +51,12 @@ const WatchList = () => {
         <span>{filteredData.length}/50</span>
       </div>
 
-      {/* List */}
       <ul className="watchlist-list">
         {filteredData.map((stock) => (
           <WatchListItem key={stock.name} stock={stock} />
         ))}
       </ul>
 
-      {/* Chart */}
       <div className="watchlist-chart">
         <DoughnutChart data={chartData} />
       </div>
