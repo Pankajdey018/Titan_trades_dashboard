@@ -1,27 +1,63 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import "./publicPages.css";
 
+import { registerUser } from "../../services/authService";
+
 const RegisterPage = () => {
+  const navigate = useNavigate();
+  const [form, setForm] = useState({ name: "", email: "", password: "" });
+
+  const handleChange = (field) => (e) => {
+    setForm((prev) => ({ ...prev, [field]: e.target.value }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    await registerUser(form);
+    navigate("/login");
+  };
+
   return (
     <main className="public-page auth-page">
       <section className="auth-card">
         <h1>Create your account</h1>
         <p>Get started with Titan Trades and access your trading workspace.</p>
 
-        <form className="auth-form">
+        <form className="auth-form" onSubmit={handleSubmit}>
           <label htmlFor="name">Full Name</label>
-          <input id="name" type="text" placeholder="Jane Doe" />
+          <input
+            id="name"
+            type="text"
+            placeholder="Jane Doe"
+            value={form.name}
+            onChange={handleChange("name")}
+            required
+          />
 
           <label htmlFor="register-email">Email</label>
-          <input id="register-email" type="email" placeholder="you@example.com" />
+          <input
+            id="register-email"
+            type="email"
+            placeholder="you@example.com"
+            value={form.email}
+            onChange={handleChange("email")}
+            required
+          />
 
           <label htmlFor="register-password">Password</label>
-          <input id="register-password" type="password" placeholder="Create password" />
+          <input
+            id="register-password"
+            type="password"
+            placeholder="Create password"
+            value={form.password}
+            onChange={handleChange("password")}
+            required
+          />
 
-          <Link to="/dashboard" className="primary-btn auth-submit">
+          <button type="submit" className="primary-btn auth-submit">
             Create Account
-          </Link>
+          </button>
         </form>
 
         <p className="auth-footer">
