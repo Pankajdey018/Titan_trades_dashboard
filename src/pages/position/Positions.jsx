@@ -1,17 +1,38 @@
-import React, { useState, useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import "./positions.css";
 
-import { positions as initialData } from "../../data/data.js";
 import PositionsTable from "../position/PositionsTable.jsx";
+import { fetchPositions } from "../../services/positionsService.js";
 
 const Positions = () => {
+  const [positions, setPositions] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
   const [filter, setFilter] = useState("ALL");
+
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+        const data = await fetchPositions();
+        setPositions(data);
+      } catch {
+        setError("Failed to load positions");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadData();
+  }, []);
 
   const filteredPositions = useMemo(() => {
     return filter === "ALL"
-      ? initialData
-      : initialData.filter((p) => p.product === filter);
-  }, [filter]);
+      ? positions
+      : positions.filter((p) => p.product === filter);
+  }, [filter, positions]);
+
+  if (loading) return <p>Loading positions...</p>;
+  if (error) return <p>{error}</p>;
 
   return (
     <div className="positions">
@@ -20,7 +41,6 @@ const Positions = () => {
         <span>{filteredPositions.length} items</span>
       </div>
 
-      {/* Filters */}
       <div className="filters">
         <button
           className={filter === "ALL" ? "active" : ""}
@@ -53,21 +73,15 @@ const Positions = () => {
 
 export default Positions;
 
-// ✅ FIXED missing component
 const PositionSummary = ({ data }) => {
-  const totalPnl = data.reduce(
-    (acc, p) => acc + (p.price - p.avg) * p.qty,
-    0
-  );
+  const totalPnl = data.reduce((acc, p) => acc + (p.price - p.avg) * p.qty, 0);
 
   const isProfit = totalPnl >= 0;
 
   return (
     <div className="positions-summary">
       <p>Total P&L</p>
-      <h3 className={isProfit ? "profit" : "loss"}>
-        ₹{totalPnl.toFixed(2)}
-      </h3>
+      <h3 className={isProfit ? "profit" : "loss"}>₹{totalPnl.toFixed(2)}</h3>
     </div>
   );
 };

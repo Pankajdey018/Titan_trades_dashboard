@@ -12,12 +12,12 @@ import {
 } from "@mui/icons-material";
 
 const menuItems = [
-  { name: "Dashboard", path: "/", icon: <Dashboard /> },
-  { name: "Orders", path: "/orders", icon: <ListAlt /> },
-  { name: "Holdings", path: "/holdings", icon: <AccountBalance /> },
-  { name: "Positions", path: "/positions", icon: <ShowChart /> },
-  { name: "Funds", path: "/funds", icon: <AccountBalanceWallet /> },
-  { name: "Apps", path: "/apps", icon: <Apps /> },
+  { name: "Dashboard", path: "/dashboard", icon: <Dashboard /> },
+  { name: "Orders", path: "/dashboard/orders", icon: <ListAlt /> },
+  { name: "Holdings", path: "/dashboard/holdings", icon: <AccountBalance /> },
+  { name: "Positions", path: "/dashboard/positions", icon: <ShowChart /> },
+  { name: "Funds", path: "/dashboard/funds", icon: <AccountBalanceWallet /> },
+  { name: "Apps", path: "/dashboard/apps", icon: <Apps /> },
 ];
 
 const Sidebar = () => {
@@ -25,10 +25,8 @@ const Sidebar = () => {
 
   return (
     <div className="sidebar">
-      {/* Logo */}
-      <div className="logo">Zerodha</div>
+      <div className="logo">Titan Trades</div>
 
-      {/* Menu */}
       <ul className="menu-list">
         {menuItems.map((item) => (
           <li key={item.name}>
@@ -37,6 +35,7 @@ const Sidebar = () => {
               className={({ isActive }) =>
                 isActive ? "menu-item active" : "menu-item"
               }
+              end={item.path === "/dashboard"}
             >
               {item.icon}
               <span>{item.name}</span>
@@ -45,13 +44,12 @@ const Sidebar = () => {
         ))}
       </ul>
 
-      {/* Profile */}
       <div
         className="profile"
         onClick={() => setIsProfileOpen(!isProfileOpen)}
       >
-        <div className="avatar">ZU</div>
-        <p>USERID</p>
+        <div className="avatar">TT</div>
+        <p>TRADER01</p>
       </div>
 
       {isProfileOpen && (

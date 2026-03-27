@@ -8,10 +8,10 @@ import Funds from "../pages/funds/Funds.jsx";
 import Apps from "../pages/Apps.jsx";
 
 export const dashboardRoutes = [
-  { path: "/", element: <Summary /> },
-  { path: "/orders", element: <Orders /> },
-  { path: "/holdings", element: <Holdings /> },
-  { path: "/positions", element: <Positions /> },
-  { path: "/funds", element: <Funds /> },
-  { path: "/apps", element: <Apps /> },
+  { path: "", element: <Summary /> },
+  { path: "orders", element: <Orders /> },
+  { path: "holdings", element: <Holdings /> },
+  { path: "positions", element: <Positions /> },
+  { path: "funds", element: <Funds /> },
+  { path: "apps", element: <Apps /> },
 ];
