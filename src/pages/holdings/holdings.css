@@ -1,0 +1,37 @@
+.holdings {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.holdings-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+}
+
+.holdings-table th,
+.holdings-table td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+}
+
+.holdings-table tr:hover {
+  background: #f5f5f5;
+}
+
+.profit {
+  color: green;
+}
+
+.loss {
+  color: red;
+}
+
+.summary-row {
+  display: flex;
+  gap: 40px;
+  background: white;
+  padding: 16px;
+}

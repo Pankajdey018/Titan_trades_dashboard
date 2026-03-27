@@ -1,0 +1,60 @@
+.watchlist {
+  padding: 10px;
+  background: #fff;
+}
+
+.watchlist-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.watchlist-header input {
+  width: 70%;
+  padding: 6px;
+}
+
+.watchlist-list {
+  list-style: none;
+  padding: 0;
+}
+
+.watchlist-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px;
+  cursor: pointer;
+}
+
+.watchlist-item:hover {
+  background: #f5f5f5;
+}
+
+.item-right {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.up {
+  color: green;
+}
+
+.down {
+  color: red;
+}
+
+.watchlist-actions {
+  display: flex;
+  gap: 6px;
+}
+
+.buy {
+  background: #4caf50;
+  color: white;
+}
+
+.sell {
+  background: #f44336;
+  color: white;
+}

@@ -1,0 +1,154 @@
+/* 🌍 Base */
+body {
+  margin: 0;
+  font-family: "Inter", sans-serif;
+  background: #f5f7fb;
+  color: #111827;
+}
+
+/* 📦 Page Container */
+.funds-page {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+/* 🔥 Banner */
+.funds-banner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #eef2ff;
+  border: 1px solid #e0e7ff;
+  padding: 16px 20px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+}
+
+.funds-banner p {
+  margin: 0;
+  font-size: 14px;
+  color: #374151;
+}
+
+/* 🎯 Buttons */
+.actions {
+  display: flex;
+  gap: 10px;
+}
+
+.btn {
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-size: 14px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.btn.primary {
+  background: #4f46e5;
+  color: #fff;
+}
+
+.btn.primary:hover {
+  background: #4338ca;
+}
+
+.btn.secondary {
+  background: #f3f4f6;
+  color: #111827;
+}
+
+.btn.secondary:hover {
+  background: #e5e7eb;
+}
+
+/* 📊 Grid Layout */
+.grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 20px;
+}
+
+/* 📦 Card */
+.card {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+/* 🧾 Card Header */
+.card-header {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  color: #111827;
+}
+
+/* 📄 Card Body */
+.card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* 📈 Data Row */
+.data-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 0;
+  font-size: 14px;
+}
+
+/* Label */
+.data-row span:first-child {
+  color: #6b7280;
+}
+
+/* Value */
+.data-row span:last-child {
+  font-weight: 600;
+  color: #111827;
+}
+
+/* ⭐ Highlight Important Value */
+.data-row.highlight span:last-child {
+  color: #16a34a;
+  font-size: 16px;
+}
+
+/* ➖ Divider */
+.card hr {
+  border: none;
+  border-top: 1px solid #e5e7eb;
+  margin: 12px 0;
+}
+
+/* 📦 Empty Card */
+.empty-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 12px;
+}
+
+.empty-card p {
+  margin: 0;
+  font-size: 14px;
+  color: #6b7280;
+}
+
+/* 📱 Responsive */
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .funds-banner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+}

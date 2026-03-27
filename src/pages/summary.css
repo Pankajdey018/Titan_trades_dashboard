@@ -1,0 +1,57 @@
+.summary {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.summary-header h2 {
+  margin: 0;
+}
+
+/* Cards */
+.summary-cards {
+  display: flex;
+  gap: 20px;
+}
+
+.card {
+  background: #fff;
+  padding: 16px;
+  border-radius: 10px;
+  flex: 1;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+.card-title {
+  color: #777;
+  font-size: 14px;
+}
+
+.card-subtitle {
+  font-size: 12px;
+  color: #999;
+}
+
+.profit {
+  color: green;
+}
+
+/* Details */
+.summary-details {
+  display: flex;
+  gap: 20px;
+}
+
+.details-box {
+  background: #fff;
+  padding: 16px;
+  border-radius: 10px;
+  flex: 1;
+}
+
+/* Watchlist */
+.summary-watchlist {
+  background: #fff;
+  padding: 16px;
+  border-radius: 10px;
+}

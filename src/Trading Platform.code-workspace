@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"name": "Trading Platform",
+			"path": "../.."
+		},
+		{
+			"name": "dashboard",
+			"path": "../../../zerodha-clone-main/zerodha-clone-main/dashboard"
+		}
+	],
+	"settings": {}
+}
