@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./watchlist.css";
+import "./WatchList.css";
 
 import { watchlist as initialData } from "../../../data/data";
 import WatchListItem from "./WatchListItem";
