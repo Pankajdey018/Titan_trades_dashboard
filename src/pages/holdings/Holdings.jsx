@@ -15,7 +15,7 @@ const Holdings = () => {
       try {
         const data = await fetchHoldings();
         setHoldings(data);
-      } catch (err) {
+      } catch {
         setError("Failed to load holdings");
       } finally {
         setLoading(false);

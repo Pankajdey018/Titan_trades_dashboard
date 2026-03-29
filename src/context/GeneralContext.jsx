@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import BuyActionWindow from "../components/trading/BuyActionWindow.jsx";
 
 const GeneralContext = React.createContext({
-  openBuyWindow: (uid) => {},
+  openBuyWindow: () => {},
   closeBuyWindow: () => {},
 });
 

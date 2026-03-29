@@ -7,6 +7,8 @@ import { registerUser } from "../../services/authService";
 const RegisterPage = () => {
   const navigate = useNavigate();
   const [form, setForm] = useState({ name: "", email: "", password: "" });
+  const [error, setError] = useState("");
+  const [submitting, setSubmitting] = useState(false);
 
   const handleChange = (field) => (e) => {
     setForm((prev) => ({ ...prev, [field]: e.target.value }));
@@ -14,8 +16,18 @@ const RegisterPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await registerUser(form);
-    navigate("/login");
+    setError("");
+    setSubmitting(true);
+
+    try {
+      await registerUser(form);
+      navigate("/login");
+    } catch (err) {
+      const message = err?.response?.data?.message || "Registration failed. Please try again.";
+      setError(message);
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -55,8 +67,10 @@ const RegisterPage = () => {
             required
           />
 
-          <button type="submit" className="primary-btn auth-submit">
-            Create Account
+          {error && <p className="auth-error">{error}</p>}
+
+          <button type="submit" className="primary-btn auth-submit" disabled={submitting}>
+            {submitting ? "Creating Account..." : "Create Account"}
           </button>
         </form>
 

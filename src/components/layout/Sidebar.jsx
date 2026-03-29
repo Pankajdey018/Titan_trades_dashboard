@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import "./layout.css";
 
 import {
@@ -10,6 +10,7 @@ import {
   AccountBalanceWallet,
   Apps,
 } from "@mui/icons-material";
+import { setAuthToken } from "../../services/apiClient";
 
 const menuItems = [
   { name: "Dashboard", path: "/dashboard", icon: <Dashboard /> },
@@ -22,6 +23,12 @@ const menuItems = [
 
 const Sidebar = () => {
   const [isProfileOpen, setIsProfileOpen] = useState(false);
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    setAuthToken(null);
+    navigate("/login", { replace: true });
+  };
 
   return (
     <div className="sidebar">
@@ -55,7 +62,7 @@ const Sidebar = () => {
       {isProfileOpen && (
         <div className="dropdown">
           <p>Profile</p>
-          <p>Logout</p>
+          <p onClick={handleLogout}>Logout</p>
         </div>
       )}
     </div>

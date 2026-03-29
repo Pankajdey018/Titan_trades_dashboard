@@ -6,8 +6,13 @@ import {
   KeyboardArrowUp,
 } from "@mui/icons-material";
 
-const WatchListItem = ({ stock }) => {
+const WatchListItem = ({ stock, onRemove }) => {
   const [hover, setHover] = useState(false);
+
+  const stockName = stock.name || stock.symbol;
+  const isDown = typeof stock.isDown === "boolean"
+    ? stock.isDown
+    : String(stock.percent || "").includes("-");
 
   return (
     <li
@@ -16,24 +21,24 @@ const WatchListItem = ({ stock }) => {
       onMouseLeave={() => setHover(false)}
     >
       <div className="item-left">
-        <p className={stock.isDown ? "down" : "up"}>
-          {stock.name}
+        <p className={isDown ? "down" : "up"}>
+          {stockName}
         </p>
       </div>
 
       <div className="item-right">
-        <span>{stock.percent}</span>
+        <span>{stock.percent || "--"}</span>
 
-        {stock.isDown ? (
+        {isDown ? (
           <KeyboardArrowDown className="down" />
         ) : (
           <KeyboardArrowUp className="up" />
         )}
 
-        <span>₹{stock.price}</span>
+        <span>₹{stock.price || stock.ltp || 0}</span>
       </div>
 
-      {hover && <WatchListActions stock={stock} />}
+      {hover && <WatchListActions stock={stock} onRemove={onRemove} />}
     </li>
   );
 };
