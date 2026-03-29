@@ -7,6 +7,8 @@ import { loginUser } from "../../services/authService";
 const LoginPage = () => {
   const navigate = useNavigate();
   const [form, setForm] = useState({ email: "", password: "" });
+  const [error, setError] = useState("");
+  const [submitting, setSubmitting] = useState(false);
 
   const handleChange = (field) => (e) => {
     setForm((prev) => ({ ...prev, [field]: e.target.value }));
@@ -14,8 +16,18 @@ const LoginPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await loginUser(form);
-    navigate("/dashboard");
+    setError("");
+    setSubmitting(true);
+
+    try {
+      await loginUser(form);
+      navigate("/dashboard");
+    } catch (err) {
+      const message = err?.response?.data?.message || "Login failed. Please check your credentials.";
+      setError(message);
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -45,8 +57,10 @@ const LoginPage = () => {
             required
           />
 
-          <button type="submit" className="primary-btn auth-submit">
-            Sign In
+          {error && <p className="auth-error">{error}</p>}
+
+          <button type="submit" className="primary-btn auth-submit" disabled={submitting}>
+            {submitting ? "Signing In..." : "Sign In"}
           </button>
         </form>
 

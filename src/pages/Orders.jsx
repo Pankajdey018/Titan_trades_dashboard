@@ -1,27 +1,38 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-import { fetchOrders } from "../services/ordersService";
+import { cancelOrder, fetchOrders } from "../services/ordersService";
 
 const Orders = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-  useEffect(() => {
-    const loadOrders = async () => {
-      try {
-        const data = await fetchOrders();
-        setOrders(data);
-      } catch {
-        setError("Failed to load orders");
-      } finally {
-        setLoading(false);
-      }
-    };
+  const loadOrders = async () => {
+    try {
+      const data = await fetchOrders();
+      setOrders(data);
+    } catch {
+      setError("Failed to load orders");
+    } finally {
+      setLoading(false);
+    }
+  };
 
+  useEffect(() => {
     loadOrders();
   }, []);
+
+  const handleCancel = async (id) => {
+    if (!id) return;
+
+    try {
+      await cancelOrder(id);
+      await loadOrders();
+    } catch {
+      setError("Unable to cancel selected order");
+    }
+  };
 
   if (loading) return <p>Loading orders...</p>;
   if (error) return <p>{error}</p>;
@@ -32,7 +43,7 @@ const Orders = () => {
         <div className="no-orders">
           <p>You haven't placed any orders today</p>
 
-          <Link to="/" className="btn">
+          <Link to="/dashboard" className="btn">
             Get started
           </Link>
         </div>
@@ -47,18 +58,29 @@ const Orders = () => {
                 <th>Qty</th>
                 <th>Price</th>
                 <th>Status</th>
+                <th>Action</th>
               </tr>
             </thead>
             <tbody>
-              {orders.map((order) => (
-                <tr key={order.id || `${order.symbol}-${order.createdAt}`}>
-                  <td>{order.symbol || order.name}</td>
-                  <td>{order.side || order.mode}</td>
-                  <td>{order.qty}</td>
-                  <td>{order.price}</td>
-                  <td>{order.status || "OPEN"}</td>
-                </tr>
-              ))}
+              {orders.map((order) => {
+                const status = order.status || "OPEN";
+                const cancellable = ["OPEN", "PENDING"].includes(String(status).toUpperCase());
+
+                return (
+                  <tr key={order.id || `${order.symbol}-${order.createdAt}`}>
+                    <td>{order.symbol || order.name}</td>
+                    <td>{order.side || order.mode}</td>
+                    <td>{order.qty}</td>
+                    <td>{order.price}</td>
+                    <td>{status}</td>
+                    <td>
+                      <button disabled={!cancellable} onClick={() => handleCancel(order.id)}>
+                        Cancel
+                      </button>
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </div>
